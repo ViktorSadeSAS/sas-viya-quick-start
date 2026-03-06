@@ -1,4 +1,4 @@
-## Copyright © 2022, SAS Institute Inc., Cary, NC, USA.  All Rights Reserved.
+## Copyright © 2026, SAS Institute Inc., Cary, NC, USA.  All Rights Reserved.
 ##  SPDX-License-Identifier: Apache-2.0                                        
 
 import numpy as np
@@ -16,7 +16,7 @@ np.set_printoptions(suppress=True, precision=2)
 # Get interval inputs
 trainX_intv = dm_traindf[dm_interval_input]
 # Get class inputs, convert data to str (missing becomes nan str)
-trainX_class = dm_traindf[dm_class_input].applymap(str)
+trainX_class = dm_traindf[dm_class_input].map(str)
 
 # Impute interval missing values to median
 intv_imputer = SimpleImputer(strategy='median')
@@ -49,7 +49,7 @@ dm_model.fit(trainX, trainy)
 fullX_intv = dm_inputdf[dm_interval_input]
 fullX_intv_imp = intv_imputer.transform(fullX_intv)
 
-fullX_class = dm_inputdf[dm_class_input].applymap(str)
+fullX_class = dm_inputdf[dm_class_input].map(str)
 fullX_class_ohe = class_ohe.transform(fullX_class).toarray()
 
 fullX = np.concatenate((fullX_intv_imp, fullX_class_ohe), axis=1)
